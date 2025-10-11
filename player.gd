@@ -59,3 +59,4 @@ func process_mouse_movement(event : InputEventMouse):
 		crosshair.global_position = Vector3(raycast_result.position.x, 0, raycast_result.position.z)
 		model_handle.look_at(crosshair.global_position)
 		aiming_direction = crosshair.global_position - model_handle.global_position
+		aiming_direction.y = 0

@@ -1,13 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://c2a2wpalwnbvp"]
+[gd_scene load_steps=11 format=3 uid="uid://c2a2wpalwnbvp"]
 
 [ext_resource type="PackedScene" uid="uid://djwx48nmfhvx6" path="res://player.tscn" id="1_f3sb7"]
 [ext_resource type="PackedScene" uid="uid://318f23alwesp" path="res://enemy.tscn" id="2_fj7yv"]
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_gv5m4"]
-size = Vector2(500, 500)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_f3sb7"]
-size = Vector3(500, 1, 500)
+[ext_resource type="Texture2D" uid="uid://bsx2wwfpiiybn" path="res://greybox_light_grid.png" id="2_tlwt5"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_f3sb7"]
 
@@ -18,9 +13,23 @@ sky_material = SubResource("ProceduralSkyMaterial_f3sb7")
 background_mode = 2
 sky = SubResource("Sky_fj7yv")
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tlwt5"]
+albedo_texture = ExtResource("2_tlwt5")
+uv1_scale = Vector3(100, 100, 100)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_gv5m4"]
+material = SubResource("StandardMaterial3D_tlwt5")
+size = Vector2(500, 500)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_f3sb7"]
+size = Vector3(500, 1, 500)
+
 [sub_resource type="BoxMesh" id="BoxMesh_f3sb7"]
 
 [node name="World" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_f3sb7")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 collision_layer = 4
@@ -36,9 +45,6 @@ shape = SubResource("BoxShape3D_f3sb7")
 
 [node name="Player" parent="." instance=ExtResource("1_f3sb7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5069406, 0)
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_f3sb7")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5835335, -7.883642)
