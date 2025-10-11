@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://d3mylatt3vu7a"]
+
+[ext_resource type="Script" uid="uid://2whqvrf0hpan" path="res://weapons/pistol/pistol.gd" id="1_08c3m"]
+[ext_resource type="PackedScene" uid="uid://bog4pnvgcxe5k" path="res://weapons/pistol/bullet.tscn" id="2_nosnq"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_swcir"]
+size = Vector3(0.5, 0.5, 2)
+
+[node name="Pistol" type="Node3D" node_paths=PackedStringArray("business_end")]
+script = ExtResource("1_08c3m")
+projectile_scene = ExtResource("2_nosnq")
+business_end = NodePath("Marker3D")
+metadata/_custom_type_script = "uid://kn88gltnw4kd"
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_swcir")
+
+[node name="Marker3D" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.1006287)

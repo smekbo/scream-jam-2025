@@ -1,19 +1,66 @@
-[gd_scene load_steps=4 format=3 uid="uid://djwx48nmfhvx6"]
+[gd_scene load_steps=8 format=3 uid="uid://djwx48nmfhvx6"]
 
 [ext_resource type="Script" uid="uid://bednfy0bk1bgs" path="res://player.gd" id="1_4flbx"]
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_sh265"]
+[ext_resource type="PackedScene" uid="uid://d3mylatt3vu7a" path="res://weapons/pistol/pistol.tscn" id="2_i3pqv"]
+[ext_resource type="Script" uid="uid://dskrt0io81tc2" path="res://ui.gd" id="2_onrkg"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4flbx"]
 
-[node name="Player" type="CharacterBody3D"]
-script = ExtResource("1_4flbx")
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_sh265"]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("CapsuleMesh_sh265")
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_onrkg"]
+transparency = 1
+albedo_color = Color(0.9098039, 0, 0.07058824, 0.41960785)
+
+[sub_resource type="TorusMesh" id="TorusMesh_onrkg"]
+material = SubResource("StandardMaterial3D_onrkg")
+inner_radius = 1.0
+outer_radius = 1.5
+
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("WEAPON")]
+collision_mask = 6
+script = ExtResource("1_4flbx")
+WEAPON = NodePath("model_handle/weapon_handle/Pistol")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_4flbx")
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.4999999, 0.8660253, 0, -0.8660253, 0.4999999, 0, 6.0040693, 3.0028377)
+[node name="model_handle" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="model_handle"]
+mesh = SubResource("CapsuleMesh_sh265")
+skeleton = NodePath("../..")
+
+[node name="weapon_handle" type="Node3D" parent="model_handle"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.89356947, 0, 0)
+
+[node name="Pistol" parent="model_handle/weapon_handle" instance=ExtResource("2_i3pqv")]
+
+[node name="SpotLight3D" type="SpotLight3D" parent="model_handle"]
+light_energy = 1.5
+spot_range = 72.606316
+spot_angle = 39.42338
+
+[node name="OmniLight3D" type="OmniLight3D" parent="model_handle"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5097184, -1.8035522)
+distance_fade_enabled = true
+omni_range = 1.5591534
+
+[node name="camera_handle" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7, 7)
+
+[node name="Camera3D" type="Camera3D" parent="camera_handle"]
+transform = Transform3D(1, 0, 0, 0, 0.7071067, 0.7071068, 0, -0.7071068, 0.7071067, 0, 0, 0)
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_onrkg")
+
+[node name="crosshair" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.2578616, 0)
+mesh = SubResource("TorusMesh_onrkg")
