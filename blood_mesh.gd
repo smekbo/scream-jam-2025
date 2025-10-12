@@ -1,5 +1,5 @@
 extends MultiMeshInstance3D
-class_name Blood_Mesh
+class_name Blood_Multimesh
 
 
 # Called when the node enters the scene tree for the first time.
@@ -22,7 +22,7 @@ func blood_splatter(blood_origin : Vector3, direction : Vector3, magnitude : flo
 		blood_scale = Vector3(1/i, 1, 1/i)
 		if i == 0:
 			blood_scale = Vector3(1, 1, 1)
-		blood_travel = blood_travel + direction.normalized() * magnitude / 3
+		blood_travel = blood_travel + direction.normalized() * magnitude / (magnitude / 2)
 		
 		# Add blood
 		var blood_position = Transform3D()

@@ -22,7 +22,7 @@ func _process(delta: float) -> void:
 		velocity = ProjectSettings.get_setting("physics/3d/default_gravity") * ProjectSettings.get_setting("physics/3d/default_gravity_vector")
 
 	if Input.is_action_pressed("fire"):
-		WEAPON.fire(aiming_direction)
+		WEAPON.fire(crosshair.global_position)
 
 	velocity.x = SPEED * delta * -1 * (Input.get_action_strength("move_left") - Input.get_action_strength("move_right"))
 	velocity.z = SPEED * delta * -1 * (Input.get_action_strength("move_forward") - Input.get_action_strength("move_backward"))
@@ -59,5 +59,3 @@ func process_mouse_movement(event : InputEventMouse):
 	if mouse_position_raycast:
 		crosshair.global_position = Vector3(mouse_position_raycast.position.x, 0, mouse_position_raycast.position.z)
 		model_handle.look_at(crosshair.global_position)
-		aiming_direction = crosshair.global_position - model_handle.global_position
-		aiming_direction.y = 0

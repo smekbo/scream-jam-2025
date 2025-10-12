@@ -1,8 +1,9 @@
-[gd_scene load_steps=14 format=3 uid="uid://c2a2wpalwnbvp"]
+[gd_scene load_steps=13 format=3 uid="uid://c2a2wpalwnbvp"]
 
 [ext_resource type="PackedScene" uid="uid://djwx48nmfhvx6" path="res://player.tscn" id="1_f3sb7"]
 [ext_resource type="PackedScene" uid="uid://318f23alwesp" path="res://enemy.tscn" id="2_fj7yv"]
 [ext_resource type="Texture2D" uid="uid://bsx2wwfpiiybn" path="res://greybox_light_grid.png" id="2_tlwt5"]
+[ext_resource type="PlaneMesh" uid="uid://ty03ectxyuj2" path="res://blood_mesh.tres" id="4_036b0"]
 [ext_resource type="Script" uid="uid://cpmae8ysbenrx" path="res://blood_mesh.gd" id="4_aqk2v"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_f3sb7"]
@@ -25,17 +26,9 @@ size = Vector2(100, 100)
 [sub_resource type="BoxShape3D" id="BoxShape3D_f3sb7"]
 size = Vector3(500, 1, 500)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_aqk2v"]
-albedo_color = Color(0.8453944, 0, 0.25252193, 1)
-stencil_flags = 2
-stencil_outline_thickness = 0.042
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_036b0"]
-material = SubResource("StandardMaterial3D_aqk2v")
-
 [sub_resource type="MultiMesh" id="MultiMesh_aqk2v"]
 transform_format = 1
-mesh = SubResource("PlaneMesh_036b0")
+mesh = ExtResource("4_036b0")
 
 [node name="World" type="Node3D"]
 
@@ -61,11 +54,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5069406, 0)
 [node name="Enemy" parent="." instance=ExtResource("2_fj7yv")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.73008, 1.2366829, -13.631165)
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.9185052, -6.01901, -0.10494518)
-mesh = SubResource("PlaneMesh_036b0")
-
-[node name="blood_mesh" type="MultiMeshInstance3D" parent="."]
+[node name="blood_multimesh" type="MultiMeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6622794, 0)
 multimesh = SubResource("MultiMesh_aqk2v")
 script = ExtResource("4_aqk2v")

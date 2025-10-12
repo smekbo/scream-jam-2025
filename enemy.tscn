@@ -1,11 +1,12 @@
-[gd_scene load_steps=8 format=3 uid="uid://318f23alwesp"]
+[gd_scene load_steps=9 format=3 uid="uid://318f23alwesp"]
 
 [ext_resource type="Script" uid="uid://dbcm457m2y6gw" path="res://enemy.gd" id="1_7k104"]
+[ext_resource type="PlaneMesh" uid="uid://ty03ectxyuj2" path="res://blood_mesh.tres" id="2_4gyqm"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_4gyqm"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_7k104"]
-radius = 0.6917973
+radius = 0.75
 
 [sub_resource type="SphereMesh" id="SphereMesh_qi2p4"]
 
@@ -23,6 +24,18 @@ tracks/0/keys = {
 "update": 0,
 "values": [Vector3(0, 0, 0)]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CPUParticles3D:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_7k104"]
 resource_name = "hurt"
@@ -39,6 +52,18 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 0,
 "values": [Vector3(0, 0, 0), Vector3(0, 0.22184789, 0), Vector3(0, -0.08102846, 0), Vector3(0, 0.2517867, 0), Vector3(0, -0.034302473, 0), Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CPUParticles3D:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.041666668),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_qi2p4"]
@@ -68,6 +93,19 @@ debug_color = Color(0.9375904, 0.15725502, 0.49384725, 0.41960785)
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Node3D"]
 mesh = SubResource("SphereMesh_qi2p4")
 skeleton = NodePath("../..")
+
+[node name="CPUParticles3D" type="CPUParticles3D" parent="."]
+emitting = false
+amount = 3
+one_shot = true
+explosiveness = 1.0
+mesh = ExtResource("2_4gyqm")
+direction = Vector3(0, 1, 0)
+gravity = Vector3(0, -15, 0)
+initial_velocity_min = 3.0
+initial_velocity_max = 10.0
+scale_amount_min = 0.1
+scale_amount_max = 0.5
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

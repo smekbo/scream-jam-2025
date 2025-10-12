@@ -17,7 +17,7 @@ func _process(delta: float) -> void:
 	if target:
 		var direction = target - global_position
 		velocity = direction * SPEED * delta
-		#move_and_slide()
+		move_and_slide()
 
 
 func on_target_changed(new_target : Vector3):
@@ -26,6 +26,7 @@ func on_target_changed(new_target : Vector3):
 
 
 func _on_hurtbox_body_entered(projectile : Projectile) -> void:
-	var hurt_direction = projectile.global_position.direction_to(global_position)
+	var hurt_direction = _game.player.global_position.direction_to(global_position)
 	fx_animation.play("hurt")
-	_game.blood_mesh.blood_splatter(global_position, hurt_direction, projectile.damage)
+	_game.blood_multimesh.blood_splatter(global_position, hurt_direction, projectile.damage)
+	projectile.queue_free()
