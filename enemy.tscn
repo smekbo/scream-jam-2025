@@ -9,6 +9,21 @@ radius = 0.6917973
 
 [sub_resource type="SphereMesh" id="SphereMesh_qi2p4"]
 
+[sub_resource type="Animation" id="Animation_4gyqm"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Node3D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
 [sub_resource type="Animation" id="Animation_7k104"]
 resource_name = "hurt"
 length = 0.29167083
@@ -24,21 +39,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 0,
 "values": [Vector3(0, 0, 0), Vector3(0, 0.22184789, 0), Vector3(0, -0.08102846, 0), Vector3(0, 0.2517867, 0), Vector3(0, -0.034302473, 0), Vector3(0, 0, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_4gyqm"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Node3D:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(0, 0, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_qi2p4"]
@@ -73,3 +73,8 @@ skeleton = NodePath("../..")
 libraries = {
 &"": SubResource("AnimationLibrary_qi2p4")
 }
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="bleed"]

@@ -11,6 +11,7 @@ signal player_position_update
 @onready var model_handle : Node3D = $model_handle
 
 var aiming_direction : Vector3
+var mouse_position_raycast : Dictionary
 
 
 func _ready() -> void:
@@ -43,7 +44,7 @@ func process_mouse_movement(event : InputEventMouse):
 	camera.position.z = mouse_distance_from_center.y / 100
 	
 	# figure out where to put the mouse crosshair on the ground
-	var raycast_result
+	
 	var ray_length = 100
 	var from = camera.project_ray_origin(event.position)
 	var to = from + camera.project_ray_normal(event.position) * ray_length
@@ -52,11 +53,11 @@ func process_mouse_movement(event : InputEventMouse):
 	ray_query.collision_mask = 0b00000000_00000000_00000000_00000100
 	ray_query.from = from
 	ray_query.to = to
-	raycast_result = space.intersect_ray(ray_query)
+	mouse_position_raycast = space.intersect_ray(ray_query)
 	
 	# if the mouse is over ground, move the crosshair and rotate body
-	if raycast_result:
-		crosshair.global_position = Vector3(raycast_result.position.x, 0, raycast_result.position.z)
+	if mouse_position_raycast:
+		crosshair.global_position = Vector3(mouse_position_raycast.position.x, 0, mouse_position_raycast.position.z)
 		model_handle.look_at(crosshair.global_position)
 		aiming_direction = crosshair.global_position - model_handle.global_position
 		aiming_direction.y = 0

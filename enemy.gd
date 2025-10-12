@@ -24,5 +24,10 @@ func on_target_changed(new_target : Vector3):
 	target = new_target
 
 
-func take_damage():
+func bleed():
+	_game.blood_mesh.blood_splatter(global_position, global_position - _game.player.global_position, 4)
+
+
+func take_damage(from_direction : Vector3):
 	fx_animation.play("hurt")
+	_game.blood_mesh.blood_splatter(global_position, global_position - _game.player.global_position, 5)
