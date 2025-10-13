@@ -1,7 +1,7 @@
 extends CharacterBody3D
 class_name Enemy
 
-@export var SPEED : int = 100
+@export var SPEED : int = 70
 @export var HEALTH : int = 6
 @export var GIB_COUNT : int = 2
 

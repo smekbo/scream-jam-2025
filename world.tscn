@@ -63,7 +63,6 @@ shape = SubResource("BoxShape3D_f3sb7")
 
 [node name="Player" parent="." instance=ExtResource("1_f3sb7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5069406, 0)
-SPEED = null
 
 [node name="Enemy" parent="." instance=ExtResource("2_fj7yv")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.73008, 1.2366829, -13.631165)
@@ -77,5 +76,6 @@ script = ExtResource("4_aqk2v")
 mesh = SubResource("BoxMesh_gbfbk")
 
 [node name="Timer" type="Timer" parent="."]
+autostart = true
 
 [connection signal="timeout" from="Timer" to="." method="spawn_enemy"]

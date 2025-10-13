@@ -28,7 +28,7 @@ func blood_splatter(blood_origin : Vector3, direction : Vector3, magnitude : flo
 		# Add blood
 		var blood_position = Transform3D()
 		blood_position = blood_position.scaled(blood_scale)
-		blood_position = blood_position.translated(blood_origin + blood_travel + Vector3(randf()*1.5,-3.5,randf()*1.5))
+		blood_position = blood_position.translated(blood_origin + blood_travel + Vector3(randf()*1.5,-3,randf()*1.5))
 		
 		# if all meshes are visible, just tick down the counter
 		if multimesh.visible_instance_count == multimesh.instance_count and mesh_index >= multimesh.instance_count:

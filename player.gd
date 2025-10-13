@@ -32,8 +32,8 @@ func _process(delta: float) -> void:
 	x_input = (Input.get_action_strength("move_left") - Input.get_action_strength("move_right"))
 	y_input = (Input.get_action_strength("move_forward") - Input.get_action_strength("move_backward"))
 	
-	if x_input != 0 and y_input != 0:
-		tank_body_target.position = Vector3(-x_input * 5, 1, -y_input * 5)
+	if x_input != 0 or y_input != 0:
+		tank_body_target.position = Vector3(x_input * 5, 1, y_input * 5) * transform
 	rotate_body()
 	rotate_turret()
 	
@@ -85,6 +85,6 @@ func rotate_turret():
 
 func rotate_body():
 	var body_transform : Transform3D = tank_skeleton.get_bone_global_pose(0)
-	var isolate_rotation = body_transform.interpolate_with(body_transform.looking_at(tank_body_target.global_position), 0.01)
+	var isolate_rotation = body_transform.interpolate_with(body_transform.looking_at(tank_body_target.global_position), 0.05)
 	body_transform.basis = Basis(isolate_rotation.basis.x, Vector3(0,1,0), isolate_rotation.basis.z)
 	tank_skeleton.set_bone_global_pose(0, body_transform)

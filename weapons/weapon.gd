@@ -18,7 +18,7 @@ func _process(delta: float) -> void:
 	time_since_last_fire += delta
 
 func fire(target : Vector3):
-	var direction = business_end.global_position.direction_to(target) * Vector3(1,0,1)
+	var direction = business_end.global_position.direction_to(target) * Vector3(1,1,1)
 	if time_since_last_fire >= firing_speed:
 		emit_projectile(direction)
 		print("Bang!")
