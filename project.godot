@@ -54,6 +54,10 @@ fire={
 3d_physics/layer_3="world"
 3d_physics/layer_4="player_projectile"
 
+[physics]
+
+3d/physics_engine="Jolt Physics"
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"

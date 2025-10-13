@@ -1,6 +1,8 @@
 extends MultiMeshInstance3D
 class_name Blood_Multimesh
 
+var mesh_index : int = 0
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -15,19 +17,24 @@ func _ready() -> void:
 
 func blood_splatter(blood_origin : Vector3, direction : Vector3, magnitude : float):
 	direction = Vector3(direction.x, 0, direction.z)
-	var blood_scale = Vector3(1, 1, 1)
+	var blood_scale = Vector3(magnitude, 1, magnitude)
 	var blood_travel : Vector3 = Vector3.ZERO
 	for i in magnitude:
 		# Adjust blood
-		blood_scale = Vector3(1/i, 1, 1/i)
-		if i == 0:
-			blood_scale = Vector3(1, 1, 1)
+		blood_scale = Vector3(magnitude/(i+1), 1, magnitude/(i+1))
+		if i <= 0:
+			blood_scale = Vector3(magnitude, 1, magnitude)
 		blood_travel = blood_travel + direction.normalized() * magnitude / (magnitude / 2)
-		
 		# Add blood
 		var blood_position = Transform3D()
 		blood_position = blood_position.scaled(blood_scale)
-		blood_position = blood_position.translated(blood_origin + blood_travel + Vector3(0,-3.5,0))
-		multimesh.set_instance_transform(multimesh.visible_instance_count, blood_position)
+		blood_position = blood_position.translated(blood_origin + blood_travel + Vector3(randf()*1.5,-3.5,randf()*1.5))
+		
+		# if all meshes are visible, just tick down the counter
+		if multimesh.visible_instance_count == multimesh.instance_count and mesh_index >= multimesh.instance_count:
+			mesh_index = 0
+			
+		multimesh.set_instance_transform(mesh_index, blood_position)
+		mesh_index += 1
 		multimesh.visible_instance_count += 1
 	multimesh.visible_instance_count += 1

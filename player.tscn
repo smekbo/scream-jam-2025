@@ -1,12 +1,48 @@
-[gd_scene load_steps=8 format=3 uid="uid://djwx48nmfhvx6"]
+[gd_scene load_steps=16 format=3 uid="uid://djwx48nmfhvx6"]
 
 [ext_resource type="Script" uid="uid://bednfy0bk1bgs" path="res://player.gd" id="1_4flbx"]
+[ext_resource type="PackedScene" uid="uid://d2lnsvgilj5ye" path="res://test_tank.blend" id="2_hqtel"]
 [ext_resource type="PackedScene" uid="uid://d3mylatt3vu7a" path="res://weapons/pistol/pistol.tscn" id="2_i3pqv"]
 [ext_resource type="Script" uid="uid://dskrt0io81tc2" path="res://ui.gd" id="2_onrkg"]
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4flbx"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_sweqy"]
+size = Vector3(2.0680695, 1.1989899, 2.626587)
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_sh265"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hqtel"]
+albedo_color = Color(4.283637e-06, 0.7698743, 0.23690584, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_hqtel"]
+material = SubResource("StandardMaterial3D_hqtel")
+radius = 0.2
+height = 0.4
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_hqtel"]
+animation = &"forward"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_sweqy"]
+animation = &"left"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_2hs0m"]
+animation = &"right"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_1jxqw"]
+animation = &"down"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_dw050"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_hqtel")
+blend_point_0/pos = Vector2(0, 0.8)
+blend_point_1/node = SubResource("AnimationNodeAnimation_sweqy")
+blend_point_1/pos = Vector2(-0.8, 0)
+blend_point_2/node = SubResource("AnimationNodeAnimation_2hs0m")
+blend_point_2/pos = Vector2(0.90000004, 0)
+blend_point_3/node = SubResource("AnimationNodeAnimation_1jxqw")
+blend_point_3/pos = Vector2(0, -0.8)
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_b26j0"]
+graph_offset = Vector2(-716.31104, 72.5432)
+nodes/body_rotation/node = SubResource("AnimationNodeBlendSpace2D_dw050")
+nodes/body_rotation/position = Vector2(-240, 140)
+node_connections = [&"output", 0, &"body_rotation"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_onrkg"]
 transparency = 1
@@ -20,29 +56,51 @@ outer_radius = 1.5
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("WEAPON")]
 collision_mask = 6
 script = ExtResource("1_4flbx")
-WEAPON = NodePath("model_handle/weapon_handle/Pistol")
+WEAPON = NodePath("model_handle/test_tank/Armature/Skeleton3D/BoneAttachment3D/weapon_handle/Pistol")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("CapsuleShape3D_4flbx")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.342659, 0.5568619, 0.19244385)
+shape = SubResource("BoxShape3D_sweqy")
+
+[node name="tank_body_target" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.08059883, 1, -5.874237)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="tank_body_target"]
+mesh = SubResource("SphereMesh_hqtel")
 
 [node name="model_handle" type="Node3D" parent="."]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="model_handle"]
-mesh = SubResource("CapsuleMesh_sh265")
-skeleton = NodePath("../..")
+[node name="test_tank" parent="model_handle" instance=ExtResource("2_hqtel")]
 
-[node name="weapon_handle" type="Node3D" parent="model_handle"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.89356947, 0, 0)
+[node name="Skeleton3D" parent="model_handle/test_tank/Armature" index="0"]
+bones/0/rotation = Quaternion(0, 0.049178187, 0, 0.9987901)
 
-[node name="Pistol" parent="model_handle/weapon_handle" instance=ExtResource("2_i3pqv")]
+[node name="BoneAttachment3D" type="BoneAttachment3D" parent="model_handle/test_tank/Armature/Skeleton3D" index="1"]
+transform = Transform3D(0.995163, -0.09823227, -0.0009998452, 0, -0.010177851, 0.9999482, -0.09823736, -0.99511147, -0.010128621, -0.41287833, 1.060013, -0.41347316)
+bone_name = "barrel"
+bone_idx = 5
+
+[node name="weapon_handle" type="Node3D" parent="model_handle/test_tank/Armature/Skeleton3D/BoneAttachment3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0076349378, 0.61379075, -0.78988934)
+
+[node name="Pistol" parent="model_handle/test_tank/Armature/Skeleton3D/BoneAttachment3D/weapon_handle" instance=ExtResource("2_i3pqv")]
+transform = Transform3D(1, 0, 0, 0, -4.377216e-08, -1, 0, 1, -4.377216e-08, 0, -0.40355784, 0.8095659)
+
+[node name="AnimationTree" type="AnimationTree" parent="model_handle"]
+active = false
+root_node = NodePath("../test_tank")
+tree_root = SubResource("AnimationNodeBlendTree_b26j0")
+anim_player = NodePath("../test_tank/AnimationPlayer")
+parameters/body_rotation/blend_position = Vector2(0.0005671978, 0.74887896)
 
 [node name="SpotLight3D" type="SpotLight3D" parent="model_handle"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6789572, -1.0956678)
 light_energy = 1.5
 spot_range = 72.606316
 spot_angle = 39.42338
 
 [node name="OmniLight3D" type="OmniLight3D" parent="model_handle"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5097184, -1.8035522)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5097184, -1.9150152)
 distance_fade_enabled = true
 omni_range = 1.5591534
 
@@ -64,3 +122,5 @@ script = ExtResource("2_onrkg")
 [node name="crosshair" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.2578616, 0)
 mesh = SubResource("TorusMesh_onrkg")
+
+[editable path="model_handle/test_tank"]
