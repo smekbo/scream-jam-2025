@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://cm8spufyw7g4m"]
+
+[ext_resource type="Script" uid="uid://b8d5r64npl6qy" path="res://weapons/machine_gun/machinegun_bullet.gd" id="1_1sews"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1sews"]
+
+[sub_resource type="TubeTrailMesh" id="TubeTrailMesh_0dj1g"]
+material = SubResource("StandardMaterial3D_1sews")
+radius = 0.1
+radial_steps = 3
+sections = 2
+section_length = 0.5
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_kfrv5"]
+radius = 0.2
+
+[node name="Machinegun_Bullet" type="Node3D"]
+script = ExtResource("1_1sews")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.9106855e-15, -4.371139e-08, -1, -1, -4.371139e-08, 0, -4.371139e-08, 1, -4.371139e-08, 0, 0, 0)
+mesh = SubResource("TubeTrailMesh_0dj1g")
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 8
+collision_mask = 6
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_kfrv5")
+
+[connection signal="body_entered" from="Area3D" to="." method="on_collision"]

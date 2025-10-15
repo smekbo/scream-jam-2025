@@ -1,0 +1,65 @@
+[gd_scene load_steps=4 format=3 uid="uid://dwwlprye7vpv3"]
+
+[ext_resource type="Script" uid="uid://bniwgjtyvya57" path="res://weapons/shotgun/shotgun.gd" id="1_rxqsx"]
+[ext_resource type="PackedScene" uid="uid://cwy0m21gmna4m" path="res://weapons/shotgun/shotgun.blend" id="2_apfrx"]
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_rxqsx"]
+
+[node name="shotgun" type="Node3D" node_paths=PackedStringArray("business_end")]
+script = ExtResource("1_rxqsx")
+firing_speed = 0.8
+business_end = NodePath("Marker3D")
+projectile_damage = 2.5
+projectile_lifetime = 2.0
+metadata/_custom_type_script = "uid://kn88gltnw4kd"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0.24628448, -0.030804515, -2.4594727)
+mesh = SubResource("ArrayMesh_rxqsx")
+
+[node name="Marker3D" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.3647516)
+visible = false
+
+[node name="RayCast3D" type="RayCast3D" parent="Marker3D"]
+transform = Transform3D(0.9980333, -0.06258067, -0.0036324845, -0.0027354185, 0.014414281, -0.9998924, 0.062626295, 0.9979359, 0.014214762, 0, 0, 0)
+target_position = Vector3(0, -100, 0)
+collision_mask = 6
+
+[node name="RayCast3D2" type="RayCast3D" parent="Marker3D"]
+transform = Transform3D(0.99992895, 0.01190953, -0.0005070704, -2.0804615e-05, -0.040794667, -0.99916756, -0.011920296, 0.9990967, -0.040791515, 0, 0, 0)
+target_position = Vector3(0, -100, 0)
+collision_mask = 6
+
+[node name="RayCast3D3" type="RayCast3D" parent="Marker3D"]
+transform = Transform3D(0.9705823, 0.24063516, 0.008062562, 0.006915922, 0.0056092013, -0.9999604, -0.24067086, 0.97059953, 0.003779985, 0, 0, 0)
+target_position = Vector3(0, -100, 0)
+collision_mask = 6
+
+[node name="RayCast3D4" type="RayCast3D" parent="Marker3D"]
+transform = Transform3D(0.9998825, -0.015294317, -0.00094347785, -0.00053370954, 0.026774175, -0.9996413, 0.015314095, 0.99952453, 0.026762865, 0, 0, 0)
+target_position = Vector3(0, -100, 0)
+collision_mask = 6
+
+[node name="RayCast3D5" type="RayCast3D" parent="Marker3D"]
+transform = Transform3D(0.97427964, -0.2252803, -0.0052814754, -0.0012782062, 0.01791233, -0.99983895, 0.22533858, 0.9741294, 0.017163662, 0, 0, 0)
+target_position = Vector3(0, -100, 0)
+collision_mask = 6
+
+[node name="RayCast3D6" type="RayCast3D" parent="Marker3D"]
+transform = Transform3D(0.9888943, 0.14820483, 0.011109754, 0.013668769, -0.016259402, -0.9997744, -0.14799073, 0.98882306, -0.01810462, 0, 0, 0)
+target_position = Vector3(0, -100, 0)
+collision_mask = 6
+
+[node name="RayCast3D7" type="RayCast3D" parent="Marker3D"]
+transform = Transform3D(0.9818398, 0.1896919, -0.0027911728, 0.009740298, -0.06509785, -0.99783134, -0.18946214, 0.97968316, -0.06576332, 0, 0, 0)
+target_position = Vector3(0, -100, 0)
+collision_mask = 6
+
+[node name="RayCast3D8" type="RayCast3D" parent="Marker3D"]
+transform = Transform3D(0.9856535, -0.16843057, -0.010883049, -0.00790363, 0.018349621, -0.99980044, 0.16859668, 0.9855427, 0.016755145, 0, 0, 0)
+target_position = Vector3(0, -100, 0)
+collision_mask = 6
+
+[node name="shotgun" parent="." instance=ExtResource("2_apfrx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.75354695)

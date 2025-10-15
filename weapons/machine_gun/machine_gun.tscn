@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://dtin0rhweadgn"]
+
+[ext_resource type="Script" uid="uid://rm5ieai5oigq" path="res://weapons/machine_gun/machine_gun.gd" id="1_v81f0"]
+[ext_resource type="PackedScene" uid="uid://cm8spufyw7g4m" path="res://weapons/machine_gun/machinegun_bullet.tscn" id="2_a31f2"]
+[ext_resource type="PackedScene" uid="uid://cs2crijlffmuk" path="res://weapons/machine_gun/machine_gun.blend" id="3_a31f2"]
+
+[node name="Machine_Gun" type="Node3D" node_paths=PackedStringArray("business_end")]
+script = ExtResource("1_v81f0")
+projectile_scene = ExtResource("2_a31f2")
+firing_speed = 0.1
+business_end = NodePath("Marker3D")
+projectile_damage = 1.5
+projectile_speed = 100.0
+projectile_lifetime = 2.0
+metadata/_custom_type_script = "uid://kn88gltnw4kd"
+
+[node name="Marker3D" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.6142228)
+
+[node name="machine_gun" parent="." instance=ExtResource("3_a31f2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.78908044)

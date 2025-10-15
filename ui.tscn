@@ -1,0 +1,43 @@
+[gd_scene load_steps=2 format=3 uid="uid://oetapnw8fxfe"]
+
+[ext_resource type="Script" uid="uid://dskrt0io81tc2" path="res://ui.gd" id="1_fyqef"]
+
+[node name="UI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_fyqef")
+
+[node name="health_label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 11.0
+offset_right = 73.0
+offset_bottom = 23.0
+text = "HEALTH"
+
+[node name="health_value" type="Label" parent="."]
+layout_mode = 0
+offset_left = 81.0
+offset_top = 1.0
+offset_right = 121.0
+offset_bottom = 24.0
+text = "100"
+
+[node name="score_label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 11.0
+offset_top = 23.0
+offset_right = 73.0
+offset_bottom = 46.0
+text = "SCORE"
+
+[node name="score_value" type="Label" parent="."]
+layout_mode = 0
+offset_left = 81.0
+offset_top = 24.0
+offset_right = 121.0
+offset_bottom = 47.0
+text = "0"

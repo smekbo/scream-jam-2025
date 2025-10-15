@@ -1,0 +1,134 @@
+[gd_scene load_steps=8 format=3 uid="uid://dryegmfoel0e"]
+
+[ext_resource type="Script" uid="uid://dkpy3u0dlgcm0" path="res://weapons/explosion.gd" id="1_t4ilm"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_e1fwo"]
+radius = 3.6042309
+
+[sub_resource type="Animation" id="Animation_e1fwo"]
+resource_name = "explosion"
+length = 0.26667002
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshInstance3D:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.16666667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MeshInstance3D:mesh:radius")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(2, 0),
+"points": PackedFloat32Array(0.001, 0, 0, 0.01666667, 0.3331667, 3, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.16666667)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("MeshInstance3D:mesh:height")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(2, 0),
+"points": PackedFloat32Array(0.001, 0, 0, 0.01666667, 0.6665001, 6, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.16666667)
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.033333335, 0.26666668),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"damage_enemies"
+}, {
+"args": [],
+"method": &"queue_free"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_t4ilm"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshInstance3D:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MeshInstance3D:mesh:radius")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(2, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("MeshInstance3D:mesh:height")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(4, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_23upt"]
+_data = {
+&"RESET": SubResource("Animation_t4ilm"),
+&"explosion": SubResource("Animation_e1fwo")
+}
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pfoup"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_t4ilm"]
+material = SubResource("StandardMaterial3D_pfoup")
+radius = 2.0
+height = 4.0
+radial_segments = 32
+rings = 16
+
+[node name="explosion" type="Node3D"]
+script = ExtResource("1_t4ilm")
+metadata/_custom_type_script = "uid://dkpy3u0dlgcm0"
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_e1fwo")
+debug_color = Color(0.98257154, 0, 0.36519787, 0.41960785)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_23upt")
+}
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+visible = false
+mesh = SubResource("SphereMesh_t4ilm")

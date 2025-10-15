@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://dpmcvoseeqsyx"]
+
+[ext_resource type="Script" uid="uid://cldgph2mc1mqx" path="res://enemies/gib_scenes/gibs.gd" id="1_u3stx"]
+[ext_resource type="PackedScene" uid="uid://bct63ssrmfbmg" path="res://enemies/gib_scenes/gib_models/gore2.blend" id="2_ts6bj"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_q34a7"]
+rough = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_q34a7"]
+size = Vector3(0.5, 0.5, 0.5)
+
+[node name="gibs" type="RigidBody3D"]
+collision_layer = 0
+collision_mask = 5
+mass = 10.0
+physics_material_override = SubResource("PhysicsMaterial_q34a7")
+script = ExtResource("1_u3stx")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_q34a7")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
+[node name="gore2" parent="." instance=ExtResource("2_ts6bj")]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

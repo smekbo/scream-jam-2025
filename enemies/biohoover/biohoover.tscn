@@ -1,0 +1,136 @@
+[gd_scene load_steps=10 format=3 uid="uid://byxotedsbrjr6"]
+
+[ext_resource type="Script" uid="uid://dhgj4fhbf2do2" path="res://enemies/biohoover/biohoover.gd" id="1_1rxjr"]
+[ext_resource type="PackedScene" uid="uid://gg1ckis0i75v" path="res://enemies/biohoover/BioHoover.blend" id="2_1rxjr"]
+[ext_resource type="PlaneMesh" uid="uid://ty03ectxyuj2" path="res://blood_mesh.tres" id="2_deemw"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_4gyqm"]
+radius = 0.48787594
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_1rxjr"]
+radius = 0.5403357
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_1vd8i"]
+radius = 0.5403357
+
+[sub_resource type="Animation" id="Animation_4gyqm"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("model_handle:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CPUParticles3D:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_7k104"]
+resource_name = "hurt"
+length = 0.29167083
+step = 0.041666668
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("model_handle:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.041666668, 0.083333336, 0.125, 0.16666667, 0.20833333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0.22184789, 0), Vector3(0, -0.08102846, 0), Vector3(0, 0.2517867, 0), Vector3(0, -0.034302473, 0), Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CPUParticles3D:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.041666668),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qi2p4"]
+_data = {
+&"RESET": SubResource("Animation_4gyqm"),
+&"hurt": SubResource("Animation_7k104")
+}
+
+[node name="Biohoover" type="CharacterBody3D"]
+collision_layer = 2
+collision_mask = 13
+script = ExtResource("1_1rxjr")
+GIB_SCALE = 1.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.010492325, 0.27279073, 0.010492325)
+shape = SubResource("SphereShape3D_4gyqm")
+
+[node name="hitbox" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 8
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="hitbox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.020983696, 0.31475836, 0)
+shape = SubResource("SphereShape3D_1rxjr")
+
+[node name="model_handle" type="Node3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+
+[node name="BioHoover" parent="model_handle" instance=ExtResource("2_1rxjr")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, 0)
+
+[node name="hurtbox" type="Area3D" parent="model_handle"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+collision_layer = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="model_handle/hurtbox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.020983696, 0.31475836, -0.86181015)
+shape = SubResource("SphereShape3D_1vd8i")
+debug_color = Color(0.9584257, 3.080368e-06, 0.5298511, 0.41960785)
+
+[node name="CPUParticles3D" type="CPUParticles3D" parent="."]
+emitting = false
+amount = 3
+lifetime = 0.2
+one_shot = true
+explosiveness = 1.0
+mesh = ExtResource("2_deemw")
+emission_shape = 1
+emission_sphere_radius = 1.0
+direction = Vector3(0, 1, 0)
+gravity = Vector3(0, -15, 0)
+initial_velocity_min = 3.0
+initial_velocity_max = 10.0
+scale_amount_min = 0.1
+scale_amount_max = 0.5
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_qi2p4")
+}
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[connection signal="body_entered" from="model_handle/hurtbox" to="." method="_on_hurtbox_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="bleed"]

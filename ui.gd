@@ -1,6 +1,11 @@
 extends Control
 
+@onready var ui_health_value : Label = $health_value
+@onready var ui_score_value : Label = $score_value
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
+
+func update_health_display(value):
+	ui_health_value.text = str(value)
+
+func update_score_display(value):
+	ui_score_value.text = str(value)

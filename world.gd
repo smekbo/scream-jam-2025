@@ -1,6 +1,6 @@
 extends Node3D
 
-var enemy_scene : PackedScene = load("res://enemy.tscn")
+var enemy_scene : PackedScene = load("res://enemies/biohoover/biohoover.tscn")
 
 
 func spawn_enemy():

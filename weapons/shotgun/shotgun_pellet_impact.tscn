@@ -1,0 +1,40 @@
+[gd_scene load_steps=4 format=3 uid="uid://d2y5tbfp1067n"]
+
+[ext_resource type="Script" uid="uid://4rb3imm6wddp" path="res://weapons/shotgun/shotgun_pellet_impact.gd" id="1_71fg3"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ajo5m"]
+emission_enabled = true
+emission = Color(0.7242183, 0.66711223, 7.70092e-07, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_0royp"]
+material = SubResource("StandardMaterial3D_ajo5m")
+top_radius = 0.0
+bottom_radius = 0.03
+height = 0.1
+radial_segments = 4
+
+[node name="shotgun_pellet_impact" type="Node3D"]
+script = ExtResource("1_71fg3")
+
+[node name="blast" type="Node3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, 1.913, 0, 0, 0, 1.919, 0, 0.030404016, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="blast"]
+transform = Transform3D(0.84765947, 0.5305408, 0, -0.5305408, 0.84765947, 0, 0, 0, 1, 0.028356312, 0, 0)
+mesh = SubResource("CylinderMesh_0royp")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="blast"]
+transform = Transform3D(0.9993649, 0.035632093, 0, -0.032123424, 0.90095806, 0.43271527, 0.015418551, -0.43244046, 0.9015306, -0.003065588, 0.006131109, -0.02912271)
+mesh = SubResource("CylinderMesh_0royp")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="blast"]
+transform = Transform3D(0.9365552, 0.19895488, 0.1838997, -0.028043581, 0.6230794, -0.42417547, -0.3695157, 0.45697343, 0.4982944, 0.005475519, -0.01251054, 0.027383864)
+mesh = SubResource("CylinderMesh_0royp")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="blast"]
+transform = Transform3D(0.9312595, -0.3643567, 0, 0.3643567, 0.9312595, 0, 0, 0, 1, -0.035253823, 0.0053647105, 0)
+mesh = SubResource("CylinderMesh_0royp")
+skeleton = NodePath("../..")

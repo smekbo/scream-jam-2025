@@ -1,0 +1,112 @@
+[gd_scene load_steps=15 format=3 uid="uid://djwx48nmfhvx6"]
+
+[ext_resource type="Script" uid="uid://bednfy0bk1bgs" path="res://player/player.gd" id="1_4flbx"]
+[ext_resource type="PackedScene" uid="uid://def7kpd5rlxed" path="res://player/catgirltank.blend" id="2_yw30f"]
+[ext_resource type="PackedScene" uid="uid://ukti0gp0mqtu" path="res://weapons/rocket_launcher/rocket_launcher.tscn" id="3_yw30f"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_yw30f"]
+radius = 1.1514893
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hqtel"]
+albedo_color = Color(4.283637e-06, 0.7698743, 0.23690584, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_hqtel"]
+material = SubResource("StandardMaterial3D_hqtel")
+radius = 0.2
+height = 0.4
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_hqtel"]
+animation = &"forward"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_sweqy"]
+animation = &"left"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_2hs0m"]
+animation = &"right"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_1jxqw"]
+animation = &"down"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_dw050"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_hqtel")
+blend_point_0/pos = Vector2(0, 0.8)
+blend_point_1/node = SubResource("AnimationNodeAnimation_sweqy")
+blend_point_1/pos = Vector2(-0.8, 0)
+blend_point_2/node = SubResource("AnimationNodeAnimation_2hs0m")
+blend_point_2/pos = Vector2(0.90000004, 0)
+blend_point_3/node = SubResource("AnimationNodeAnimation_1jxqw")
+blend_point_3/pos = Vector2(0, -0.8)
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_b26j0"]
+graph_offset = Vector2(-716.31104, 72.5432)
+nodes/body_rotation/node = SubResource("AnimationNodeBlendSpace2D_dw050")
+nodes/body_rotation/position = Vector2(-240, 140)
+node_connections = [&"output", 0, &"body_rotation"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_onrkg"]
+transparency = 1
+albedo_color = Color(0.9098039, 0, 0.07058824, 0.41960785)
+
+[sub_resource type="TorusMesh" id="TorusMesh_onrkg"]
+material = SubResource("StandardMaterial3D_onrkg")
+inner_radius = 1.0
+outer_radius = 1.5
+
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("WEAPON")]
+collision_mask = 6
+script = ExtResource("1_4flbx")
+WEAPON = NodePath("model_handle/catgirltank")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.013601318, 1.1541858, -0.0028085858)
+shape = SubResource("SphereShape3D_yw30f")
+
+[node name="tank_body_target" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.08059883, 1, -5.874237)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="tank_body_target"]
+mesh = SubResource("SphereMesh_hqtel")
+
+[node name="model_handle" type="Node3D" parent="."]
+
+[node name="catgirltank" parent="model_handle" instance=ExtResource("2_yw30f")]
+
+[node name="BoneAttachment3D" type="BoneAttachment3D" parent="model_handle/catgirltank/Armature/Skeleton3D" index="4"]
+transform = Transform3D(-1, 3.3043013e-14, -8.742276e-08, 8.6356644e-11, -0.9999995, -0.0009881831, -8.742272e-08, -0.0009881831, 0.9999995, 0, 1.639334, 0.7391277)
+bone_name = "barrel"
+bone_idx = 2
+
+[node name="weapon_handle" type="Node3D" parent="model_handle/catgirltank/Armature/Skeleton3D/BoneAttachment3D"]
+transform = Transform3D(1.0000001, 1.0173143e-06, -9.73603e-07, -1.017315e-06, 1, 1.3178214e-07, 9.736036e-07, -1.3178214e-07, 1, 1.3771796e-08, 0.09942722, -0.0071349144)
+
+[node name="Rocket_Launcher" parent="model_handle/catgirltank/Armature/Skeleton3D/BoneAttachment3D/weapon_handle" instance=ExtResource("3_yw30f")]
+
+[node name="SpotLight3D" type="SpotLight3D" parent="model_handle/catgirltank/Armature/Skeleton3D/BoneAttachment3D"]
+transform = Transform3D(1, 0, 6.357307e-08, 6.3569765e-08, -0.010177851, -0.9999482, 6.470371e-10, 0.9999482, -0.010177851, -0.358399, 0.269314, 0.21278012)
+light_energy = 1.5
+spot_range = 72.606316
+spot_angle = 39.42338
+
+[node name="OmniLight3D" type="OmniLight3D" parent="model_handle/catgirltank/Armature/Skeleton3D/BoneAttachment3D"]
+transform = Transform3D(-1, 2.220446e-16, -1.5099587e-07, -1.5098804e-07, -0.010177851, 0.9999482, -1.5368131e-09, 0.9999482, 0.010177851, -0.38987178, 0.7795384, 0.16637576)
+distance_fade_enabled = true
+omni_range = 1.5591534
+
+[node name="AnimationTree" type="AnimationTree" parent="model_handle"]
+active = false
+root_node = NodePath("")
+tree_root = SubResource("AnimationNodeBlendTree_b26j0")
+anim_player = NodePath("../test_tank/AnimationPlayer")
+parameters/body_rotation/blend_position = Vector2(0.0005671978, 0.74887896)
+
+[node name="camera_handle" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7, 7)
+
+[node name="Camera3D" type="Camera3D" parent="camera_handle"]
+transform = Transform3D(1, 0, 0, 0, 0.7071067, 0.7071068, 0, -0.7071068, 0.7071067, 0, 0, 0)
+
+[node name="crosshair" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.2578616, 0)
+mesh = SubResource("TorusMesh_onrkg")
+
+[editable path="model_handle/catgirltank"]

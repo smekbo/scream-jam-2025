@@ -1,0 +1,41 @@
+[gd_scene load_steps=6 format=3 uid="uid://cf11i8upt78dx"]
+
+[ext_resource type="Script" uid="uid://npw1yqtoct77" path="res://weapons/rocket_launcher/rocket.gd" id="1_runqk"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_runqk"]
+top_radius = 0.1
+bottom_radius = 0.1
+height = 0.75
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qrk0x"]
+transparency = 1
+albedo_color = Color(1, 1, 1, 0.5294118)
+
+[sub_resource type="SphereMesh" id="SphereMesh_7gc6y"]
+material = SubResource("StandardMaterial3D_qrk0x")
+radius = 0.2
+height = 0.4
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_kfrv5"]
+radius = 0.30818143
+
+[node name="Rocket" type="Node3D"]
+script = ExtResource("1_runqk")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.9106855e-15, 4.371139e-08, -1, 1, -4.371139e-08, 0, -4.371139e-08, -1, -4.371139e-08, 0, 0, -0.35748863)
+mesh = SubResource("CylinderMesh_runqk")
+
+[node name="CPUParticles3D" type="CPUParticles3D" parent="MeshInstance3D"]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 1.9386672e-08, 0.44351536, 3.8963144e-08)
+mesh = SubResource("SphereMesh_7gc6y")
+gravity = Vector3(0, 0.5, 0)
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 8
+collision_mask = 6
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_kfrv5")
+
+[connection signal="body_entered" from="Area3D" to="." method="on_collision"]
