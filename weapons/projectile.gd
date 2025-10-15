@@ -9,12 +9,10 @@ var lifetime : float
 var lifetimer : float = 0
 
 
-func init(spawn : Vector3, 
-		_direction : Vector3, 
+func init(_direction : Vector3, 
 		_speed : float, 
 		_damage : float, 
 		_lifetime : float):
-	global_position = spawn
 	direction = _direction
 	speed = _speed
 	damage = _damage

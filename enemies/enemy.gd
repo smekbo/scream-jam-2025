@@ -60,8 +60,8 @@ func take_damage(damage : float, _damage_origin : Vector3):
 	if HEALTH <= 0:
 		for i in GIB_COUNT:
 			var new_gibs : Gibs = _game.gib_spawner[randi() % _game.gib_spawner.size()].instantiate()
+			get_tree().root.get_child(0).add_child(new_gibs)
 			new_gibs.global_position = global_position
-			get_node("/root/World").add_child(new_gibs)
 			new_gibs.toss_gibs(hurt_direction, GIB_SCALE)
 		_game.score += VALUE
 		queue_free()

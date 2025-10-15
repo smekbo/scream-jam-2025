@@ -1,0 +1,94 @@
+[gd_scene load_steps=21 format=3 uid="uid://c2a2wpalwnbvp"]
+
+[ext_resource type="PackedScene" uid="uid://djwx48nmfhvx6" path="res://player/player.tscn" id="1_f3sb7"]
+[ext_resource type="Script" uid="uid://b5b3jg8g1l1dc" path="res://world.gd" id="1_pkg7o"]
+[ext_resource type="Script" uid="uid://camorp06ftixh" path="res://world_geo.gd" id="2_k3n1d"]
+[ext_resource type="Texture2D" uid="uid://bsx2wwfpiiybn" path="res://greybox_light_grid.png" id="2_tlwt5"]
+[ext_resource type="PlaneMesh" uid="uid://ty03ectxyuj2" path="res://blood_mesh.tres" id="4_036b0"]
+[ext_resource type="Script" uid="uid://cpmae8ysbenrx" path="res://blood_mesh.gd" id="4_aqk2v"]
+[ext_resource type="Shader" uid="uid://d35rppfbiglkl" path="res://blood_mesh.gdshader" id="6_dwbse"]
+[ext_resource type="PackedScene" uid="uid://dutpyf1pxjfbx" path="res://weapons/weapon_pickup.tscn" id="8_gbfbk"]
+[ext_resource type="PackedScene" uid="uid://dtin0rhweadgn" path="res://weapons/machine_gun/machine_gun.tscn" id="9_ioo17"]
+[ext_resource type="PackedScene" uid="uid://ukti0gp0mqtu" path="res://weapons/rocket_launcher/rocket_launcher.tscn" id="10_wse8f"]
+[ext_resource type="PackedScene" uid="uid://dwwlprye7vpv3" path="res://weapons/shotgun/shotgun.tscn" id="11_ic0uy"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_f3sb7"]
+
+[sub_resource type="Sky" id="Sky_fj7yv"]
+sky_material = SubResource("ProceduralSkyMaterial_f3sb7")
+
+[sub_resource type="Environment" id="Environment_f3sb7"]
+background_mode = 2
+sky = SubResource("Sky_fj7yv")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tlwt5"]
+albedo_texture = ExtResource("2_tlwt5")
+uv1_scale = Vector3(10, 10, 10)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_gv5m4"]
+material = SubResource("StandardMaterial3D_tlwt5")
+size = Vector2(100, 100)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_f3sb7"]
+size = Vector3(500, 1, 500)
+
+[sub_resource type="MultiMesh" id="MultiMesh_036b0"]
+transform_format = 1
+instance_count = 1
+mesh = ExtResource("4_036b0")
+buffer = PackedFloat32Array(-1.001, 0, 0, 1.1529675, 0, 1.001, 0, -2.7439346, 0, 0, -1.001, -31.519999)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pkg7o"]
+render_priority = 0
+shader = ExtResource("6_dwbse")
+shader_parameter/opacity = 0.35
+
+[sub_resource type="BoxMesh" id="BoxMesh_gbfbk"]
+material = SubResource("ShaderMaterial_pkg7o")
+
+[node name="World" type="Node3D"]
+script = ExtResource("1_pkg7o")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_f3sb7")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("2_k3n1d")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.081655025, 0)
+mesh = SubResource("PlaneMesh_gv5m4")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.46672094, 0)
+shape = SubResource("BoxShape3D_f3sb7")
+
+[node name="Player" parent="." instance=ExtResource("1_f3sb7")]
+
+[node name="blood_multimesh" type="MultiMeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.797438, 0)
+multimesh = SubResource("MultiMesh_036b0")
+script = ExtResource("4_aqk2v")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_gbfbk")
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[node name="weapon_pickup" parent="." instance=ExtResource("8_gbfbk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.260168, 0.9554591, -17.632084)
+weapon_scene = ExtResource("9_ioo17")
+
+[node name="weapon_pickup2" parent="." instance=ExtResource("8_gbfbk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.342028, 0.9554591, -9.633373)
+weapon_scene = ExtResource("10_wse8f")
+
+[node name="weapon_pickup3" parent="." instance=ExtResource("8_gbfbk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.575315, 0.9554572, -4.020281)
+weapon_scene = ExtResource("11_ic0uy")
+
+[connection signal="timeout" from="Timer" to="." method="spawn_enemy"]
