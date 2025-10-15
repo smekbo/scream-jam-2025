@@ -15,6 +15,6 @@ func process(delta: float) -> void:
 func on_collision(_body : Node3D):
 	var new_explosion : Explosion = explosion_scene.instantiate()
 	new_explosion.damage = damage
-	get_tree().root.get_child(0).add_child(new_explosion)
+	get_tree().root.get_child(2).add_child(new_explosion)
 	new_explosion.global_position = global_position
 	queue_free()
