@@ -81,14 +81,30 @@ transform = Transform3D(1.0000001, 1.0173143e-06, -9.73603e-07, -1.017315e-06, 1
 
 [node name="Rocket_Launcher" parent="model_handle/catgirltank/Armature/Skeleton3D/BoneAttachment3D/weapon_handle" instance=ExtResource("3_yw30f")]
 
-[node name="SpotLight3D" type="SpotLight3D" parent="model_handle/catgirltank/Armature/Skeleton3D/BoneAttachment3D"]
-transform = Transform3D(1, 0, 6.357307e-08, 6.3569765e-08, -0.010177851, -0.9999482, 6.470371e-10, 0.9999482, -0.010177851, -0.358399, 0.269314, 0.21278012)
+[node name="BoneAttachment3D2" type="BoneAttachment3D" parent="model_handle/catgirltank/Armature/Skeleton3D" index="5"]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 1.0738223, 0)
+bone_name = "turret"
+bone_idx = 1
+
+[node name="SpotLight3D" type="SpotLight3D" parent="model_handle/catgirltank/Armature/Skeleton3D/BoneAttachment3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3854026, 0.5995165, -0.49959755)
 light_energy = 1.5
 spot_range = 72.606316
 spot_angle = 39.42338
 
-[node name="OmniLight3D" type="OmniLight3D" parent="model_handle/catgirltank/Armature/Skeleton3D/BoneAttachment3D"]
-transform = Transform3D(-1, 2.220446e-16, -1.5099587e-07, -1.5098804e-07, -0.010177851, 0.9999482, -1.5368131e-09, 0.9999482, 0.010177851, -0.38987178, 0.7795384, 0.16637576)
+[node name="SpotLight3D2" type="SpotLight3D" parent="model_handle/catgirltank/Armature/Skeleton3D/BoneAttachment3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.35685644, 0.5995165, -0.49959743)
+light_energy = 1.5
+spot_range = 72.606316
+spot_angle = 39.42338
+
+[node name="OmniLight3D" type="OmniLight3D" parent="model_handle/catgirltank/Armature/Skeleton3D/BoneAttachment3D2"]
+transform = Transform3D(1, -8.741825e-08, 1.5010613e-07, 1.5090313e-07, 0.009189714, -0.9999578, 8.6035115e-08, 0.9999578, 0.009189714, -0.44667867, 0.62398577, -0.74419814)
+distance_fade_enabled = true
+omni_range = 1.5591534
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="model_handle/catgirltank/Armature/Skeleton3D/BoneAttachment3D2"]
+transform = Transform3D(1, -8.741825e-08, 1.5010613e-07, 1.5090313e-07, 0.009189714, -0.9999578, 8.6035115e-08, 0.9999578, 0.009189714, 0.41685817, 0.7139373, -0.7801787)
 distance_fade_enabled = true
 omni_range = 1.5591534
 

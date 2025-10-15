@@ -23,8 +23,8 @@ func _process(delta: float) -> void:
 func fire(target : Vector3):
 	var direction = business_end.global_position.direction_to(target) * Vector3(1,1,1)
 	if time_since_last_fire >= firing_speed:
-		emit_projectile(direction)
+		emit_projectile(direction, target)
 		time_since_last_fire = 0
 
-func emit_projectile(_direction : Vector3):
+func emit_projectile(_direction : Vector3, target : Vector3):
 	pass

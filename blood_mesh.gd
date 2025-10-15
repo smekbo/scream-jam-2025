@@ -4,7 +4,6 @@ class_name Blood_Multimesh
 var mesh_index : int = 0
 
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	# set all instances out of camera view
 	#for i in range(multimesh.instance_count):
@@ -19,7 +18,7 @@ func blood_splatter(blood_origin : Vector3, direction : Vector3, magnitude : flo
 	direction = Vector3(direction.x, 0, direction.z)
 	var blood_scale = Vector3(magnitude, 1, magnitude)
 	var blood_travel : Vector3 = Vector3.ZERO
-	for i in magnitude:
+	for i in magnitude / 2:
 		# Adjust blood
 		blood_scale = Vector3(magnitude/(i+1), 1, magnitude/(i+1))
 		if i <= 0:

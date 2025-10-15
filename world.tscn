@@ -13,6 +13,10 @@
 [ext_resource type="PackedScene" uid="uid://dwwlprye7vpv3" path="res://weapons/shotgun/shotgun.tscn" id="11_ic0uy"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_f3sb7"]
+sky_top_color = Color(0.18897694, 0.13831136, 0.15444025, 1)
+sky_horizon_color = Color(0.20245662, 0.08712835, 2.4065375e-08, 1)
+ground_bottom_color = Color(0.10902894, 0.088692866, 0.0658072, 1)
+ground_horizon_color = Color(0.17124876, 0.10404337, 0.07262366, 1)
 
 [sub_resource type="Sky" id="Sky_fj7yv"]
 sky_material = SubResource("ProceduralSkyMaterial_f3sb7")
@@ -20,6 +24,8 @@ sky_material = SubResource("ProceduralSkyMaterial_f3sb7")
 [sub_resource type="Environment" id="Environment_f3sb7"]
 background_mode = 2
 sky = SubResource("Sky_fj7yv")
+ambient_light_source = 3
+reflected_light_source = 2
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tlwt5"]
 albedo_texture = ExtResource("2_tlwt5")
@@ -67,6 +73,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.46672094, 0)
 shape = SubResource("BoxShape3D_f3sb7")
 
 [node name="Player" parent="." instance=ExtResource("1_f3sb7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3681746, 29.103863)
 
 [node name="blood_multimesh" type="MultiMeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.797438, 0)

@@ -3,29 +3,34 @@
 [ext_resource type="Script" uid="uid://b8d5r64npl6qy" path="res://weapons/machine_gun/machinegun_bullet.gd" id="1_1sews"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1sews"]
+emission_enabled = true
+emission = Color(0.98522216, 0.7816314, 0, 1)
 
 [sub_resource type="TubeTrailMesh" id="TubeTrailMesh_0dj1g"]
 material = SubResource("StandardMaterial3D_1sews")
-radius = 0.1
+radius = 0.05
 radial_steps = 3
 sections = 2
 section_length = 0.5
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_kfrv5"]
-radius = 0.2
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1sews"]
+radius = 0.09375
+height = 1.0706787
 
 [node name="Machinegun_Bullet" type="Node3D"]
 script = ExtResource("1_1sews")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1.9106855e-15, -4.371139e-08, -1, -1, -4.371139e-08, 0, -4.371139e-08, 1, -4.371139e-08, 0, 0, 0)
+transform = Transform3D(1.9106855e-15, -4.371139e-08, -1, -1, -4.371139e-08, 0, -4.371139e-08, 1, -4.371139e-08, 0, 0, 0.49741453)
 mesh = SubResource("TubeTrailMesh_0dj1g")
 
-[node name="Area3D" type="Area3D" parent="."]
+[node name="Area3D" type="Area3D" parent="MeshInstance3D"]
+transform = Transform3D(1.9106855e-15, -1, -4.371139e-08, -4.371139e-08, -4.371139e-08, 1, -1, 0, -4.371139e-08, -1.9455548e-08, 0.44509107, -1.9455548e-08)
 collision_layer = 8
 collision_mask = 6
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
-shape = SubResource("SphereShape3D_kfrv5")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1.4901161e-08, 1, 0, -1, 1.4901161e-08, -0.016666174, 6.612936e-09, -0.44378662)
+shape = SubResource("CapsuleShape3D_1sews")
 
-[connection signal="body_entered" from="Area3D" to="." method="on_collision"]
+[connection signal="body_entered" from="MeshInstance3D/Area3D" to="." method="on_collision"]

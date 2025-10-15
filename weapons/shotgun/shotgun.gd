@@ -4,7 +4,7 @@ extends Weapon
 @onready var ray_container : Node3D = $Marker3D
 
 
-func emit_projectile(_direction : Vector3):
+func emit_projectile(_direction : Vector3, target : Vector3):
 	for ray : RayCast3D in ray_container.get_children():
 		if ray.is_colliding():
 			var body = ray.get_collider()
