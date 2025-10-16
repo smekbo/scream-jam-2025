@@ -22,6 +22,10 @@ signal player_position_update
 @onready var tank_animation : AnimationTree = $model_handle/AnimationTree
 @onready var tank_body_target : Marker3D = $tank_body_target
 
+enum STATES {IDLE, STARTUP, MOVING, STOPPING}
+var STATE = STATES.IDLE :
+	set(state):
+		STATE = state
 var aiming_direction : Vector3
 var mouse_position_raycast : Dictionary
 var x_input = 0 
@@ -58,7 +62,16 @@ func _process(delta: float) -> void:
 	if x_input == 0 and y_input == 0:
 		velocity = velocity.move_toward(Vector3.ZERO, 0.2)
 	else:
-		velocity = SPEED * delta * body_bone.basis.z
+		velocity = velocity.move_toward(SPEED * delta * body_bone.basis.z, 0.2)
+	
+	print(velocity.length())
+	if velocity > Vector3.ZERO:
+		if STATE == STATES.IDLE:
+			STATE = STATES.STARTUP
+		elif STATE == STATES.MOVING:
+			pass
+	else:
+		STATE = STATES.IDLE
 	
 	move_and_slide()
 	emit_signal("player_position_update", global_position)

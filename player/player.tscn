@@ -1,8 +1,10 @@
-[gd_scene load_steps=15 format=3 uid="uid://djwx48nmfhvx6"]
+[gd_scene load_steps=17 format=3 uid="uid://djwx48nmfhvx6"]
 
 [ext_resource type="Script" uid="uid://bednfy0bk1bgs" path="res://player/player.gd" id="1_4flbx"]
 [ext_resource type="PackedScene" uid="uid://def7kpd5rlxed" path="res://player/catgirltank.blend" id="2_yw30f"]
 [ext_resource type="PackedScene" uid="uid://ukti0gp0mqtu" path="res://weapons/rocket_launcher/rocket_launcher.tscn" id="3_yw30f"]
+[ext_resource type="Script" uid="uid://bobps3jnaymcb" path="res://player/player_sfx.gd" id="4_qjkh3"]
+[ext_resource type="AudioStream" uid="uid://c648t8mr7yq81" path="res://player/gun_auto_barrel_spin_fast_loop.wav" id="4_yw30f"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_yw30f"]
 radius = 1.1514893
@@ -124,5 +126,14 @@ transform = Transform3D(1, 0, 0, 0, 0.7071067, 0.7071068, 0, -0.7071068, 0.70710
 [node name="crosshair" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.2578616, 0)
 mesh = SubResource("TorusMesh_onrkg")
+
+[node name="player_sfx" type="Node3D" parent="."]
+script = ExtResource("4_qjkh3")
+
+[node name="treads" type="AudioStreamPlayer3D" parent="player_sfx"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5044146, 0)
+stream = ExtResource("4_yw30f")
+volume_db = -10.0
+pitch_scale = 0.7
 
 [editable path="model_handle/catgirltank"]

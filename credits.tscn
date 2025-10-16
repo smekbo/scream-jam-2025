@@ -1,0 +1,101 @@
+[gd_scene load_steps=3 format=3 uid="uid://b8l6o2nm4k3pg"]
+
+[ext_resource type="Script" uid="uid://dcy7rlo14nug7" path="res://credits.gd" id="1_c1t8d"]
+[ext_resource type="PackedScene" uid="uid://def7kpd5rlxed" path="res://player/catgirltank.blend" id="2_g4wvt"]
+
+[node name="credits" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_c1t8d")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 175.0
+offset_top = 90.0
+offset_right = 370.0
+offset_bottom = 287.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 25
+bbcode_enabled = true
+text = "DTSTAT"
+fit_content = true
+horizontal_alignment = 1
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="VBoxContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "Models"
+fit_content = true
+horizontal_alignment = 1
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="SubViewport" type="SubViewport" parent="VBoxContainer/SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(200, 200)
+render_target_update_mode = 4
+
+[node name="Camera3D" type="Camera3D" parent="VBoxContainer/SubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 0.8660254, 0.5000001, 0, -0.5000001, 0.8660254, 0, 2.1863937, 2.7046723)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="VBoxContainer/SubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.095127344, 2.20792, 1.7066718)
+
+[node name="catgirltank" parent="VBoxContainer/SubViewportContainer/SubViewport" instance=ExtResource("2_g4wvt")]
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 465.0
+offset_top = 90.0
+offset_right = 665.0
+offset_bottom = 356.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer2"]
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 25
+bbcode_enabled = true
+text = "TEGIMINIS
+SMEKBO"
+fit_content = true
+horizontal_alignment = 1
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="VBoxContainer2"]
+layout_mode = 2
+bbcode_enabled = true
+text = "Code"
+fit_content = true
+horizontal_alignment = 1
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 726.0
+offset_top = 90.0
+offset_right = 926.0
+offset_bottom = 356.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer3"]
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 25
+bbcode_enabled = true
+text = "GUOH"
+fit_content = true
+horizontal_alignment = 1
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="VBoxContainer3"]
+layout_mode = 2
+bbcode_enabled = true
+text = "Finding sound effects"
+fit_content = true
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
