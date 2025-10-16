@@ -5,19 +5,18 @@ extends Node3D
 # SFX
 @onready var sfx_treads : AudioStreamPlayer3D = $treads
 
-var tank_stopped : bool = true
 
 
-func _process(delta: float) -> void:
-	if player.velocity > Vector3.ZERO and tank_stopped:
+func _process(_delta: float) -> void:
+	if player.STATE == player.STATES.STARTUP:
 		sfx_treads.play()
-		tank_stopped = false
-	if player.velocity > Vector3.ZERO and !tank_stopped:
+	if player.STATE == player.STATES.MOVING:
 		treads_loop()
-	else:
-		sfx_treads.stop()
+	if player.STATE == player.STATES.STOPPING:
+		sfx_treads.play()
 
 
 func treads_loop():
-	if !sfx_treads.playing:
+	print(sfx_treads.get_playback_position())
+	if sfx_treads.get_playback_position() >= 0.28:
 		sfx_treads.play()

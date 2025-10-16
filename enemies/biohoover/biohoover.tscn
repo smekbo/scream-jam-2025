@@ -99,6 +99,15 @@ transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
 [node name="BioHoover" parent="model_handle" instance=ExtResource("2_1rxjr")]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, 0)
 
+[node name="Skeleton3D" parent="model_handle/BioHoover/Armature" index="0"]
+bones/0/position = Vector3(-8.178318e-09, 0.9956168, -0.11325821)
+bones/0/rotation = Quaternion(0.99788934, -0.0025112561, -0.06488912, 2.187404e-11)
+bones/1/rotation = Quaternion(0.35671556, -0.35235235, 0.8277128, -0.25197917)
+bones/2/rotation = Quaternion(-0.33612457, -0.6913597, 0.4979596, 0.4013458)
+
+[node name="AnimationPlayer" parent="model_handle/BioHoover" index="1"]
+autoplay = "ArmatureAction"
+
 [node name="hurtbox" type="Area3D" parent="model_handle"]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 collision_layer = 0
@@ -134,3 +143,5 @@ autostart = true
 
 [connection signal="body_entered" from="model_handle/hurtbox" to="." method="_on_hurtbox_body_entered"]
 [connection signal="timeout" from="Timer" to="." method="bleed"]
+
+[editable path="model_handle/BioHoover"]

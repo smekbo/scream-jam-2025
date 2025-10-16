@@ -9,6 +9,7 @@ signal player_position_update
 		ui.update_health_display(HEALTH)
 		
 @export var SPEED : int = 500
+@export var ACCELERATION : float = 0.2
 @export var WEAPON : Weapon
 @export var BODY_TURN_SPEED : float = 0.02
 @export var TURRET_TURN_SPEED : float = 0.1
@@ -26,6 +27,7 @@ enum STATES {IDLE, STARTUP, MOVING, STOPPING}
 var STATE = STATES.IDLE :
 	set(state):
 		STATE = state
+		ui.update_state_display(state)
 var aiming_direction : Vector3
 var mouse_position_raycast : Dictionary
 var x_input = 0 
@@ -37,7 +39,7 @@ func _ready() -> void:
 		WEAPON = weapon_handle.get_child(0)
 		
 	
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		velocity = ProjectSettings.get_setting("physics/3d/default_gravity") * ProjectSettings.get_setting("physics/3d/default_gravity_vector")
 
@@ -53,24 +55,24 @@ func _process(delta: float) -> void:
 		tank_body_target.position = Vector3(x_input * 5, 1, y_input * 5) * transform
 		
 	# rotate skeleton based on inputs
-	rotate_body()
+	var body_transform = rotate_body()
 	rotate_turret()
 	elevate_barrel()
 	
 	# set velocity to tank's current forward direction
-	var body_bone = tank_skeleton.get_bone_global_pose(0)
 	if x_input == 0 and y_input == 0:
-		velocity = velocity.move_toward(Vector3.ZERO, 0.2)
+		velocity = velocity.move_toward(Vector3.ZERO, ACCELERATION)
 	else:
-		velocity = velocity.move_toward(SPEED * delta * body_bone.basis.z, 0.2)
+		velocity = velocity.move_toward(SPEED * delta * body_transform.basis.z.normalized(), ACCELERATION)
 	
-	print(velocity.length())
-	if velocity > Vector3.ZERO:
+	if velocity.length() > 0 and velocity.length() < 7:
 		if STATE == STATES.IDLE:
 			STATE = STATES.STARTUP
-		elif STATE == STATES.MOVING:
-			pass
-	else:
+		if STATE == STATES.MOVING:
+			STATE = STATES.STOPPING
+	if velocity.length() > 7:
+		STATE = STATES.MOVING
+	if velocity.length() <= 0:
 		STATE = STATES.IDLE
 	
 	move_and_slide()
@@ -111,6 +113,7 @@ func rotate_body():
 	var isolate_rotation = body_transform.interpolate_with(body_transform.looking_at(tank_body_target.global_position), BODY_TURN_SPEED)
 	body_transform.basis = Basis(isolate_rotation.basis.x, Vector3(0,1,0), isolate_rotation.basis.z)
 	tank_skeleton.set_bone_global_pose(0, body_transform)
+	return body_transform
 
 
 func rotate_turret():
