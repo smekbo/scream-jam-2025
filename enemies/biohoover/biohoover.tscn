@@ -100,10 +100,10 @@ transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, 0)
 
 [node name="Skeleton3D" parent="model_handle/BioHoover/Armature" index="0"]
-bones/0/position = Vector3(-8.178318e-09, 0.9956168, -0.11325821)
-bones/0/rotation = Quaternion(0.99788934, -0.0025112561, -0.06488912, 2.187404e-11)
-bones/1/rotation = Quaternion(0.35671556, -0.35235235, 0.8277128, -0.25197917)
-bones/2/rotation = Quaternion(-0.33612457, -0.6913597, 0.4979596, 0.4013458)
+bones/0/position = Vector3(-1.403685e-08, 0.9895899, -0.26898825)
+bones/0/rotation = Quaternion(0.98605496, -0.006435758, -0.16629557, -5.903085e-11)
+bones/1/rotation = Quaternion(0.3567155, -0.35235232, 0.82771283, -0.2519792)
+bones/2/rotation = Quaternion(-0.33612457, -0.69135964, 0.4979596, 0.4013458)
 
 [node name="AnimationPlayer" parent="model_handle/BioHoover" index="1"]
 autoplay = "ArmatureAction"
@@ -140,6 +140,8 @@ libraries = {
 
 [node name="Timer" type="Timer" parent="."]
 autostart = true
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
 
 [connection signal="body_entered" from="model_handle/hurtbox" to="." method="_on_hurtbox_body_entered"]
 [connection signal="timeout" from="Timer" to="." method="bleed"]

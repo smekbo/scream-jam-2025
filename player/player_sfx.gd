@@ -8,12 +8,12 @@ extends Node3D
 
 
 func _process(_delta: float) -> void:
-	if player.STATE == player.STATES.STARTUP:
+	if player.STATE == player.STATES.STARTUP and !sfx_treads.playing:
 		sfx_treads.play()
 	if player.STATE == player.STATES.MOVING:
 		treads_loop()
 	if player.STATE == player.STATES.STOPPING:
-		sfx_treads.play()
+		pass
 
 
 func treads_loop():
