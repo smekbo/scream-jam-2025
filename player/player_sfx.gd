@@ -13,7 +13,8 @@ func _process(_delta: float) -> void:
 	if player.STATE == player.STATES.MOVING:
 		treads_loop()
 	if player.STATE == player.STATES.STOPPING:
-		pass
+		sfx_treads.stop()
+		sfx_treads.play(0.10)
 
 
 func treads_loop():
